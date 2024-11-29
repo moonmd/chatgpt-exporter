@@ -8006,6 +8006,7 @@ html {
   const Export$8 = "Export";
   const Loading$8 = "Loading";
   const Preview$8 = "Preview";
+  const Refer$8 = "Refer";
   const en_US = {
     title: title$8,
     ExportHelper: ExportHelper$8,
@@ -8032,6 +8033,7 @@ html {
     "Invalid File Format": "Invalid File Format",
     "Export from official export file": "Export from official export file",
     "Export from API": "Export from API",
+    Refer: Refer$8,
     "Available variables": "Available variables",
     "Conversation Timestamp": "Conversation Timestamp",
     "Conversation Timestamp Description": "Will show on the page.",
@@ -8061,6 +8063,7 @@ html {
   const Export$7 = "Exportar";
   const Loading$7 = "Cargando";
   const Preview$7 = "Previsualizar";
+  const Refer$7 = "Referir";
   const es = {
     title: title$7,
     ExportHelper: ExportHelper$7,
@@ -8087,6 +8090,7 @@ html {
     "Invalid File Format": "Formato de archivo inválido",
     "Export from official export file": "Exportar desde archivo de exportación oficial",
     "Export from API": "Exportar desde API",
+    Refer: Refer$7,
     "Available variables": "Variables Disponibles",
     "Conversation Timestamp": "Marca de Tiempo",
     "Conversation Timestamp Description": "Aparecerá en la página.",
@@ -8116,6 +8120,7 @@ html {
   const Export$6 = "Exporter";
   const Loading$6 = "Chargement";
   const Preview$6 = "Aperçu";
+  const Refer$6 = "Référer";
   const fr = {
     title: title$6,
     ExportHelper: ExportHelper$6,
@@ -8142,6 +8147,7 @@ html {
     "Invalid File Format": "Format de fichier invalide",
     "Export from official export file": "Exporter depuis un fichier officiel",
     "Export from API": "Exporter depuis l'API",
+    Refer: Refer$6,
     "Available variables": "Variables disponibles",
     "Conversation Timestamp": "Horodatage de la conversation",
     "Conversation Timestamp Description": "S'affichera sur la page.",
@@ -8171,6 +8177,7 @@ html {
   const Export$5 = "Ekspor";
   const Loading$5 = "Memuat";
   const Preview$5 = "Pratinjau";
+  const Refer$5 = "Rujuk";
   const id_ID = {
     title: title$5,
     ExportHelper: ExportHelper$5,
@@ -8197,6 +8204,7 @@ html {
     "Invalid File Format": "Format File Tidak Valid",
     "Export from official export file": "Ekspor dari file ekspor resmi",
     "Export from API": "Ekspor dari API",
+    Refer: Refer$5,
     "Available variables": "Variabel yang Tersedia",
     "Conversation Timestamp": "Timestamp Percakapan",
     "Conversation Timestamp Description": "Akan ditampilkan pada halaman.",
@@ -8226,6 +8234,7 @@ html {
   const Export$4 = "エクスポート";
   const Loading$4 = "読み込み中";
   const Preview$4 = "プレビュー";
+  const Refer$4 = "参照";
   const ja_JP = {
     title: title$4,
     ExportHelper: ExportHelper$4,
@@ -8252,6 +8261,7 @@ html {
     "Invalid File Format": "無効なファイル形式",
     "Export from official export file": "公式エクスポートファイルからエクスポートする",
     "Export from API": "APIからエクスポートする",
+    Refer: Refer$4,
     "Available variables": "使用可能な変数",
     "Conversation Timestamp": "会話のタイムスタンプ",
     "Conversation Timestamp Description": "ページに表示されます。",
@@ -8281,6 +8291,7 @@ html {
   const Export$3 = "Экспорт";
   const Loading$3 = "Загрузка";
   const Preview$3 = "Предпросмотр";
+  const Refer$3 = "Ссылка";
   const ru = {
     title: title$3,
     ExportHelper: ExportHelper$3,
@@ -8307,6 +8318,7 @@ html {
     "Invalid File Format": "Неверный формат файла",
     "Export from official export file": "Экспорт из официального файла",
     "Export from API": "Экспорт из API",
+    Refer: Refer$3,
     "Available variables": "Доступные переменные",
     "Conversation Timestamp": "Временная метка разговора",
     "Conversation Timestamp Description": "Будет отображаться на странице.",
@@ -8336,6 +8348,7 @@ html {
   const Export$2 = "Dışa Aktar";
   const Loading$2 = "Yükleniyor";
   const Preview$2 = "Önizleme";
+  const Refer$2 = "Başvur";
   const tr_TR = {
     title: title$2,
     ExportHelper: ExportHelper$2,
@@ -8362,6 +8375,7 @@ html {
     "Invalid File Format": "Dosya Biçimi Geçersiz",
     "Export from official export file": "Resmi dışa aktarma dosyasından dışa aktar",
     "Export from API": "API'den dışa aktar",
+    Refer: Refer$2,
     "Available variables": "Kullanılabilir değişkenler",
     "Conversation Timestamp": "Konuşma zaman bilgisi",
     "Conversation Timestamp Description": "Sayfada gösterilir.",
@@ -8391,6 +8405,7 @@ html {
   const Export$1 = "导出";
   const Loading$1 = "加载中";
   const Preview$1 = "预览";
+  const Refer$1 = "参考";
   const zh_Hans = {
     title: title$1,
     ExportHelper: ExportHelper$1,
@@ -8417,6 +8432,7 @@ html {
     "Invalid File Format": "无效的文件格式",
     "Export from official export file": "从官方导出文件导出",
     "Export from API": "从 API 导出",
+    Refer: Refer$1,
     "Available variables": "可用变量",
     "Conversation Timestamp": "对话时间戳",
     "Conversation Timestamp Description": "会显示在页面上。",
@@ -8446,6 +8462,7 @@ html {
   const Export = "匯出";
   const Loading = "載入中";
   const Preview = "預覽";
+  const Refer = "參考";
   const zh_Hant = {
     title,
     ExportHelper,
@@ -8472,6 +8489,7 @@ html {
     "Invalid File Format": "無效的檔案格式",
     "Export from official export file": "從官方匯出檔案匯出",
     "Export from API": "從 API 匯出",
+    Refer,
     "Available variables": "可用變數",
     "Conversation Timestamp": "對話時間戳",
     "Conversation Timestamp Description": "會顯示在頁面上。",
@@ -21840,10 +21858,11 @@ ${content2}`;
         }
         setSelected([]);
         setExportSource("Local");
+        setLoading(false);
         setLocalConversations(data);
       };
       fileReader.readAsText(file);
-    }, [t2, setExportSource, setLocalConversations]);
+    }, [t2, setExportSource, setLoading, setLocalConversations]);
     p$6(() => {
       const off = requestQueue.on("progress", (progress2) => {
         setProcessing(true);
@@ -21911,7 +21930,7 @@ ${content2}`;
       if (callback) callback(format, results, metaList);
     }, [disabled, selected, localConversations, exportAllOptions, exportType, format, metaList]);
     const exportAll = F$1(() => {
-      return exportSource === "API" ? exportAllFromApi : exportAllFromLocal;
+      return exportSource !== "Local" ? exportAllFromApi : exportAllFromLocal;
     }, [exportSource, exportAllFromApi, exportAllFromLocal]);
     const deleteAll = T$4(() => {
       if (disabled) return;
@@ -21951,7 +21970,15 @@ ${content2}`;
         exportSource === "API" && /* @__PURE__ */ o$8("button", { className: "btn relative btn-neutral", onClick: () => {
           var _a;
           return (_a = fileInputRef.current) == null ? void 0 : _a.click();
-        }, children: /* @__PURE__ */ o$8(IconUpload, { className: "w-4 h-4" }) })
+        }, children: /* @__PURE__ */ o$8(IconUpload, { className: "w-4 h-4" }) }),
+        exportSource !== "API" && /* @__PURE__ */ o$8(
+          CheckBox,
+          {
+            label: t2("Refer"),
+            checked: exportSource === "Refer",
+            onCheckedChange: (checked) => setExportSource(checked ? "Refer" : "Local")
+          }
+        )
       ] }),
       /* @__PURE__ */ o$8(
         "input",
@@ -21963,7 +21990,7 @@ ${content2}`;
           onChange: onUpload
         }
       ),
-      exportSource === "API" && /* @__PURE__ */ o$8("div", { className: "flex items-center text-gray-600 dark:text-gray-300 flex justify-between mb-3", children: t2("Export from API") }),
+      exportSource !== "Local" && /* @__PURE__ */ o$8("div", { className: "flex items-center text-gray-600 dark:text-gray-300 flex justify-between mb-3", children: t2("Export from API") }),
       /* @__PURE__ */ o$8(
         ConversationSelect,
         {
