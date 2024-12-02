@@ -142,7 +142,7 @@ function conversationToHtml(conversation: ConversationResult, avatar: string, me
             postSteps = [...postSteps, input => transformFootNotes(input, message.metadata)]
         }
         if (message.author.role === 'user') {
-            postSteps = [...postSteps, input => `<p>${escapeHtml(input)}</p>`]
+            postSteps = [...postSteps, input => `<p class="no-katex">${escapeHtml(input)}</p>`]
         }
         const postProcess = (input: string) => postSteps.reduce((acc, fn) => fn(acc), input)
         const content = transformContent(message.content, message.metadata, postProcess)

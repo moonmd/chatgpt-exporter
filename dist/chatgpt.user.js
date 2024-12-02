@@ -8765,7 +8765,8 @@ html {
                     { left: "\\\\[", right: "\\\\]", display: true },
                     { left: "\\\\(", right: "\\\\)", display: false }
                 ],
-                throwOnError: false
+                throwOnError: false,
+                ignoredClasses: ["no-katex"]
             });
         });
     <\/script>
@@ -20609,7 +20610,7 @@ html {
         postSteps = [...postSteps, (input) => transformFootNotes$2(input, message.metadata)];
       }
       if (message.author.role === "user") {
-        postSteps = [...postSteps, (input) => `<p>${escapeHtml(input)}</p>`];
+        postSteps = [...postSteps, (input) => `<p class="no-katex">${escapeHtml(input)}</p>`];
       }
       const postProcess = (input) => postSteps.reduce((acc, fn2) => fn2(acc), input);
       const content2 = transformContent$2(message.content, message.metadata, postProcess);
