@@ -4,11 +4,30 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="https://chat.openai.com/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{title}}</title>
+    <title>{{title}}</title>    
+    <!-- Highlight.js for code syntax highlighting -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script>
         hljs.highlightAll()
+    </script>
+
+    <!-- KaTeX for LaTeX rendering -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.3/katex.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.3/katex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.3/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false },
+                    { left: "\\[", right: "\\]", display: true },
+                    { left: "\\(", right: "\\)", display: false }
+                ],
+                throwOnError: false
+            });
+        });
     </script>
 
     <style>
@@ -483,7 +502,7 @@
             </h1>
             <div class="conversation-export">
                 <p>Exported by
-                <a href="https://github.com/pionxzh/chatgpt-exporter">ChatGPT Exporter</a>
+                <a href="https://github.com/moonmd/chatgpt-exporter">ChatGPT Exporter</a>
                 at {{time}}</p>
             </div>
             {{details}}

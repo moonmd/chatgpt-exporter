@@ -8744,11 +8744,30 @@ html {
     <meta charset="UTF-8" />
     <link rel="icon" href="https://chat.openai.com/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{title}}</title>
+    <title>{{title}}</title>    
+    <!-- Highlight.js for code syntax highlighting -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"><\/script>
     <script>
         hljs.highlightAll()
+    <\/script>
+
+    <!-- KaTeX for LaTeX rendering -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.3/katex.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.3/katex.min.js"><\/script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.3/contrib/auto-render.min.js"><\/script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false },
+                    { left: "\\\\[", right: "\\\\]", display: true },
+                    { left: "\\\\(", right: "\\\\)", display: false }
+                ],
+                throwOnError: false
+            });
+        });
     <\/script>
 
     <style>
@@ -9223,7 +9242,7 @@ html {
             </h1>
             <div class="conversation-export">
                 <p>Exported by
-                <a href="https://github.com/pionxzh/chatgpt-exporter">ChatGPT Exporter</a>
+                <a href="https://github.com/moonmd/chatgpt-exporter">ChatGPT Exporter</a>
                 at {{time}}</p>
             </div>
             {{details}}
@@ -20540,7 +20559,7 @@ html {
         level: 9
       }
     });
-    downloadFile("chatgpt-export.zip", "application/zip", blob);
+    downloadFile("chatgpt-export-html.zip", "application/zip", blob);
     return true;
   }
   function conversationToHtml(conversation, avatar, metaList) {
@@ -20548,6 +20567,7 @@ html {
     const enableTimestamp = ScriptStorage.get(KEY_TIMESTAMP_ENABLED) ?? false;
     const timeStampHtml = ScriptStorage.get(KEY_TIMESTAMP_HTML) ?? false;
     const timeStamp24H = ScriptStorage.get(KEY_TIMESTAMP_24H) ?? false;
+    const LatexRegex2 = /(\s\$\$.+?\$\$\s|\s\$.+?\$\s|\\\[.+?\\\]|\\\(.+?\\\))|(^\$$[\S\s]+?^\$$)|(^\$\$[\S\s]+?^\$\$\$)/gm;
     const conversationHtml = conversationNodes.map(({ message }) => {
       var _a, _b, _c, _d;
       if (!message || !message.content) return null;
@@ -20567,12 +20587,28 @@ html {
       const avatarEl = message.author.role === "user" ? `<img alt="${author}" />` : '<svg width="41" height="41"><use xlink:href="#chatgpt" /></svg>';
       let postSteps = [];
       if (message.author.role === "assistant") {
+        postSteps.push((input) => {
+          const matches = input.match(LatexRegex2);
+          const isCodeBlock = /```/.test(input);
+          if (!isCodeBlock && matches) {
+            let index2 = 0;
+            input = input.replace(LatexRegex2, () => {
+              return `╬${index2++}╬`;
+            });
+            input = input.replace(/^\\\[(.+)\\\]$/gm, "$$$$$1$$$$").replace(/\\\[/g, "$$").replace(/\\\]/g, "$$").replace(/\\\(/g, "$").replace(/\\\)/g, "$");
+          }
+          let transformed = toHtml(fromMarkdown(input));
+          if (!isCodeBlock && matches) {
+            transformed = transformed.replace(/╬(\d+)╬/g, (_24, index2) => {
+              return matches[+index2];
+            });
+          }
+          return transformed;
+        });
         postSteps = [...postSteps, (input) => transformFootNotes$2(input, message.metadata)];
       }
       if (message.author.role === "user") {
         postSteps = [...postSteps, (input) => `<p>${escapeHtml(input)}</p>`];
-      } else {
-        postSteps = [...postSteps, (input) => toHtml(fromMarkdown(input))];
       }
       const postProcess = (input) => postSteps.reduce((acc, fn2) => fn2(acc), input);
       const content2 = transformContent$2(message.content, message.metadata, postProcess);
@@ -20679,7 +20715,7 @@ ${content2.text}
         }).join("\n")) || "";
       }
       default:
-        return postProcess("[Unsupported Content]");
+        return postProcess(`[Unsupported Content: ${content2.content_type} ]`);
     }
   }
   function escapeHtml(html2) {
@@ -20996,7 +21032,7 @@ ${content2.text}
         level: 9
       }
     });
-    downloadFile("chatgpt-export.zip", "application/zip", blob);
+    downloadFile("chatgpt-export-json.zip", "application/zip", blob);
     return true;
   }
   function conversationToJson(conversation) {
@@ -21043,7 +21079,7 @@ ${content2.text}
         level: 9
       }
     });
-    downloadFile("chatgpt-export.zip", "application/zip", blob);
+    downloadFile("chatgpt-export-markdown.zip", "application/zip", blob);
     return true;
   }
   const LatexRegex$1 = /(\s\$\$.+\$\$\s|\s\$.+\$\s|\\\[.+\\\]|\\\(.+\\\))|(^\$$[\S\s]+^\$$)|(^\$\$[\S\s]+^\$\$$)/gm;
