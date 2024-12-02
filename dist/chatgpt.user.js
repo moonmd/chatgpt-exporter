@@ -20571,6 +20571,7 @@ html {
     const conversationHtml = conversationNodes.map(({ message }) => {
       var _a, _b, _c, _d;
       if (!message || !message.content) return null;
+      if (message.content.content_type === "user_editable_context") return null;
       if (message.recipient !== "all") return null;
       if (message.author.role === "tool") {
         if (
@@ -20715,7 +20716,7 @@ ${content2.text}
         }).join("\n")) || "";
       }
       default:
-        return postProcess(`[Unsupported Content: ${content2.content_type} ]`);
+        return postProcess(`[Unsupported Content: ${content2.content_type}]`);
     }
   }
   function escapeHtml(html2) {
@@ -21101,6 +21102,7 @@ ${_metaList.join("\n")}
     const content2 = conversationNodes.map(({ message }) => {
       var _a, _b, _c;
       if (!message || !message.content) return null;
+      if (message.content.content_type === "user_editable_context") return null;
       if (message.recipient !== "all") return null;
       if (message.author.role === "tool") {
         if (
@@ -21230,7 +21232,7 @@ ${content2.text}
         }).join("\n")) || "";
       }
       default:
-        return postProcess("[Unsupported Content]");
+        return postProcess(`[Unsupported Content: ${content2.content_type}]`);
     }
   }
   function copyToClipboard(text2) {

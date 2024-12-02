@@ -122,6 +122,9 @@ export interface ConversationNodeMessage {
         content_type: 'text'
         parts: string[]
     } | {
+        content_type: 'user_editable_context'
+        parts: string[]
+    } | {
         // plugin response
         content_type: 'code'
         language: 'unknown' & (string & {})

@@ -79,6 +79,7 @@ function conversationToHtml(conversation: ConversationResult, avatar: string, me
 
     const conversationHtml = conversationNodes.map(({ message }) => {
         if (!message || !message.content) return null
+        if (message.content.content_type === 'user_editable_context') return null
 
         // ChatGPT is talking to tool
         if (message.recipient !== 'all') return null
@@ -289,7 +290,7 @@ function transformContent(
             }).join('\n') || ''
         }
         default:
-            return postProcess(`[Unsupported Content: ${content.content_type} ]`)
+            return postProcess(`[Unsupported Content: ${content.content_type}]`)
     }
 }
 
