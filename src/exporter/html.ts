@@ -109,6 +109,7 @@ function conversationToHtml(conversation: ConversationResult, avatar: string, me
 
         let postSteps: Array<(input: string) => string> = []
         if (message.author.role === 'assistant') {
+            postSteps = [...postSteps, input => transformFootNotes(input, message.metadata)]
             postSteps.push((input) => {
                 const matches = input.match(LatexRegex)
 
@@ -139,7 +140,6 @@ function conversationToHtml(conversation: ConversationResult, avatar: string, me
 
                 return transformed
             })
-            postSteps = [...postSteps, input => transformFootNotes(input, message.metadata)]
         }
         if (message.author.role === 'user') {
             postSteps = [...postSteps, input => `<p class="no-katex">${escapeHtml(input)}</p>`]
