@@ -238,13 +238,21 @@ function transformFootNotes(
 ) {
     // 【11†(PrintWiki)】
     const footNoteMarkRegex = /【(\d+)†\((.+?)\)】/g
-    return input.replace(footNoteMarkRegex, (match, citeIndex, _evidenceText) => {
+    input = input.replace(footNoteMarkRegex, (match, citeIndex) => {
         const citation = metadata?.citations?.find(cite => cite.metadata?.extra?.cited_message_idx === +citeIndex)
-        // We simply remove the foot note mark in html output
-        if (citation) return ''
-
-        return match
+        return citation ? '' : match
     })
+
+    metadata?.content_references?.forEach((ref) => {
+        if (ref.type === 'webpage' && ref.matched_text) {
+            const linkText = ref.alt ?? `[(${ref.attribution ?? 'Link'})](${ref.url})`
+            const referenceRegex = new RegExp(ref.matched_text.replace(/([.*+?^${}()|\[\]\/\\])/g, '\\$&'), 'g')
+            input = input.replace(referenceRegex, linkText)
+        }
+    })
+    input = input.replace(/[\uE203\uE204]/g, '')
+
+    return input
 }
 
 /**

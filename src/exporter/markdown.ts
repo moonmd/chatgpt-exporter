@@ -209,14 +209,26 @@ function transformFootNotes(
 
         return match
     })
+
+    // Process references (replacing matched_text with markdown links or placeholders)
+    const processedOutput = (metadata?.content_references ?? []).reduce((text, ref) => {
+        if (ref.type === 'webpage' && ref.matched_text) {
+            const linkText = ref.alt ?? `[(${ref.attribution ?? 'Link'})](${ref.url})`
+            const referenceRegex = new RegExp(ref.matched_text.replace(/([.*+?^${}()|\[\]\/\\])/g, '\\$&'), 'g')
+            return text.replace(referenceRegex, linkText)
+        }
+        return text
+    }, output.replace(/[\uE203\uE204]/g, ''))
+
     const citationText = citationList.map((citation) => {
         const citeIndex = citation.metadata?.extra?.cited_message_idx ?? 1
         const citeTitle = citation.metadata?.title ?? 'No title'
-        return `[^${citeIndex}]: ${citeTitle}`
+        const citeUrl = citation.metadata?.url ?? ''
+        return `[^${citeIndex}]: ${citeTitle}${citeUrl ? ` (${citeUrl})` : ''}`
     }).join('\n')
 
-    // Foot notes are placed at the end of the conversation node, not the end of the whole document
-    return `${output}\n\n${citationText}`
+    // Footnotes are placed at the end of the conversation node, not the whole document
+    return `${processedOutput}\n\n${citationText}\n---`
 }
 
 /**
