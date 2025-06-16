@@ -6,6 +6,7 @@ import { ExportDialog } from '../ui/ExportDialog';
 import { SettingProvider, useSettingContext } from '../ui/SettingContext';
 
 const ScrollButtonsInner = () => {
+    console.log('[ScrollButtons] ScrollButtonsInner component rendering');
     const [showScrollToTop, setShowScrollToTop] = useState(false);
     const [showScrollToBottom, setShowScrollToBottom] = useState(true);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -59,6 +60,7 @@ const ScrollButtonsInner = () => {
     };
 
     const positionContainer = () => {
+        console.log('[ScrollButtons] positionContainer called');
         if (!containerRef.current) return;
 
         let leftPos = '10px'; // Default left position
@@ -76,6 +78,7 @@ const ScrollButtonsInner = () => {
             leftPos = `${rect.right + 8}px`;
         }
         containerRef.current.style.left = leftPos;
+        console.log(`[ScrollButtons] Container left set to: ${leftPos}`);
     };
 
     const makeButton = (svgOrElement: string | preact.JSX.Element, onClick: () => void, title: string): preact.JSX.Element => {
@@ -151,6 +154,7 @@ const ScrollButtonsInner = () => {
     };
 
     const updateVisibility = () => {
+        console.log('[ScrollButtons] updateVisibility called');
         const primary = primaryScrollContainerRef.current;
         let scrollTop, scrollHeight, clientHeight;
 
@@ -171,10 +175,12 @@ const ScrollButtonsInner = () => {
 
         setShowScrollToTop(scrollTop > 5);
         setShowScrollToBottom(scrollTop + clientHeight < scrollHeight - 5);
+        console.log(`[ScrollButtons] Visibility - showTop: ${scrollTop > 5}, showBottom: ${scrollTop + clientHeight < scrollHeight - 5}`);
     };
 
 
     useEffect(() => {
+        console.log('[ScrollButtons] useEffect hook running');
         primaryScrollContainerRef.current = getPrimaryContainer();
         positionContainer();
         updateVisibility();
@@ -183,6 +189,7 @@ const ScrollButtonsInner = () => {
         const handleScroll = () => updateVisibility();
         const handleResize = () => {
             const newPrimaryContainer = getPrimaryContainer();
+            console.log('[ScrollButtons] resize handler - newPrimaryContainer:', newPrimaryContainer);
             if (newPrimaryContainer !== primaryScrollContainerRef.current) {
                 const oldTarget = (primaryScrollContainerRef.current !== window && primaryScrollContainerRef.current !== document.scrollingElement) ? primaryScrollContainerRef.current as HTMLElement : window;
                 (oldTarget as any).removeEventListener('scroll', handleScroll);
@@ -201,6 +208,7 @@ const ScrollButtonsInner = () => {
         window.addEventListener('resize', handleResize);
 
         const observer = new MutationObserver(() => {
+            console.log('[ScrollButtons] MutationObserver callback triggered');
             const newPrimaryOnMutation = getPrimaryContainer();
             if (newPrimaryOnMutation !== primaryScrollContainerRef.current) {
                 (targetElement as any).removeEventListener('scroll', handleScroll);
@@ -217,6 +225,7 @@ const ScrollButtonsInner = () => {
         });
 
         observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true });
+        console.log('[ScrollButtons] MutationObserver observing');
 
         return () => {
             (targetElement as any).removeEventListener('scroll', handleScroll);
@@ -242,6 +251,7 @@ const ScrollButtonsInner = () => {
                 flexDirection: 'column',
                 gap: '8px',
                 zIndex: '10000',
+                backgroundColor: 'rgba(255, 0, 0, 0.5)', // Bright red semi-transparent background
                 pointerEvents: 'none', // Allow clicks through transparent areas
             }}
         >
