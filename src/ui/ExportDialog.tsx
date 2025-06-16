@@ -208,7 +208,7 @@ const DialogContent: FC<DialogContentProps> = ({ format }) => {
     }, [archiveQueue, apiConversations, selected, t])
 
     useEffect(() => {
-        const off = deleteQueue.on('done', () => {
+        const off = deleteQueue.on('done', ()
             setProcessing(false)
             setApiConversations(apiConversations.filter(c => !selected.some(s => s.id === c.id)))
             setSelected([])
@@ -367,17 +367,19 @@ interface ExportDialogProps {
     format: string
     open: boolean
     onOpenChange: (value: boolean) => void
+    // children?: preact.ComponentChildren // No longer needed if trigger is external
 }
 
-export const ExportDialog: FC<ExportDialogProps> = ({ format, open, onOpenChange, children }) => {
+export const ExportDialog: FC<ExportDialogProps> = ({ format, open, onOpenChange }) => {
     return (
         <Dialog.Root
             open={open}
             onOpenChange={onOpenChange}
         >
-            <Dialog.Trigger asChild>
+            {/* Trigger is now handled externally by the caller */}
+            {/* <Dialog.Trigger asChild>
                 {children}
-            </Dialog.Trigger>
+            </Dialog.Trigger> */}
             <Dialog.Portal>
                 <Dialog.Overlay className="DialogOverlay" />
                 <Dialog.Content className="DialogContent">

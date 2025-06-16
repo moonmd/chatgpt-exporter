@@ -232,10 +232,13 @@ function MenuInner() {
                 alignItems: 'center',
                 gap: '4px', // For ':-' layout, adjust as needed
                 zIndex: '10000',
-                // backgroundColor: 'rgba(255, 0, 0, 0.5)', // Debug background, remove once layout is confirmed
                 pointerEvents: 'none',
             }}
         >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', pointerEvents: 'auto' }}>
+                {scrollTopBtn}
+                {scrollBotBtn}
+            </div>
             <HoverCard.Root openDelay={0} closeDelay={300} open={open} onOpenChange={setOpen}>
                 <HoverCard.Trigger asChild>
                     {makeButton(<IconArrowRightFromBracket />, (e) => { e?.stopPropagation(); setOpen(o => !o); }, t('ExportHelper'), 'export-menu-trigger-btn')}
@@ -246,40 +249,34 @@ function MenuInner() {
                         style={{ width: 268 }}
                         sideOffset={10}
                         align="start"
-                        side='right'
+                        // side='right' // This will be changed in next step
+                        side='left' // Tentatively set to left, assuming trigger is now on the right
                     >
-                        <SettingDialog open={settingOpen} onOpenChange={setSettingOpen}>
-                            <div className="row-full"><MenuItem text={t('Setting')} icon={IconSetting} /></div>
-                        </SettingDialog>
+                        <div className="row-full"><MenuItem text={t('Setting')} icon={IconSetting} onClick={() => setSettingOpen(true)} /></div>
                         <MenuItem text={t('Copy Text')} successText={t('Copied!')} icon={IconCopy} className="row-full" onClick={onClickText} />
                         <MenuItem text={t('Screenshot')} icon={IconCamera} className="row-half" onClick={onClickPng} />
                         <MenuItem text={t('Markdown')} icon={IconMarkdown} className="row-half" onClick={onClickMarkdown} />
                         <MenuItem text={t('HTML')} icon={FileCode} className="row-half" onClick={onClickHtml} />
                         <Dialog.Root open={jsonOpen} onOpenChange={setJsonOpen}>
                             <Dialog.Trigger asChild>
-                                <MenuItem text={t('JSON')} icon={IconJSON} className="row-half" onClick={onClickJSON} />
+                                <MenuItem text={t('JSON')} icon={IconJSON} className="row-half" onClick={() => { setJsonOpen(true); return true;}} />
                             </Dialog.Trigger>
                             <Dialog.Portal>
                                 <Dialog.Overlay className="DialogOverlay" />
                                 <Dialog.Content className="DialogContent" style={{ width: '320px' }}>
                                     <Dialog.Title className="DialogTitle">{t('JSON')}</Dialog.Title>
-                                    <MenuItem text={t('OpenAI Official Format')} icon={IconCopy} className="row-full" onClick={onClickOfficialJSON} />
-                                    <MenuItem text="JSONL (TavernAI, SillyTavern)" icon={IconCopy} className="row-full" onClick={onClickTavern} />
-                                    <MenuItem text="Ooba (text-generation-webui)" icon={IconCopy} className="row-full" onClick={onClickOoba} />
+                                    {/* For JSON options, ensure they also close the JSON dialog */}
+                                    <MenuItem text={t('OpenAI Official Format')} icon={IconCopy} className="row-full" onClick={() => { onClickOfficialJSON(); setJsonOpen(false); }} />
+                                    <MenuItem text="JSONL (TavernAI, SillyTavern)" icon={IconCopy} className="row-full" onClick={() => { onClickTavern(); setJsonOpen(false); }} />
+                                    <MenuItem text="Ooba (text-generation-webui)" icon={IconCopy} className="row-full" onClick={() => { onClickOoba(); setJsonOpen(false); }} />
                                 </Dialog.Content>
                             </Dialog.Portal>
                         </Dialog.Root>
-                        <ExportDialog format={format} open={exportOpen} onOpenChange={setExportOpen}>
-                            <div className="row-full"><MenuItem text={t('Export All')} icon={IconZip} /></div>
-                        </ExportDialog>
+                        <div className="row-full"><MenuItem text={t('Export All')} icon={IconZip} onClick={() => setExportOpen(true)} /></div>
                         <HoverCard.Arrow width="16" height="8" style={{ fill: 'var(--ce-menu-primary)', stroke: 'var(--ce-border-light)', strokeWidth: '1px' }} />
                     </HoverCard.Content>
                 </HoverCard.Portal>
             </HoverCard.Root>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', pointerEvents: 'auto' }}>
-                {scrollTopBtn}
-                {scrollBotBtn}
-            </div>
         </div>
     );
 }

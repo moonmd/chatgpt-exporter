@@ -19,12 +19,13 @@ function Variable({ name, title }: { name: string; title: string }) {
 interface SettingDialogProps {
     open: boolean
     onOpenChange: (value: boolean) => void
+    // children?: preact.ComponentChildren // No longer needed
 }
 
 export const SettingDialog: FC<SettingDialogProps> = ({
     open,
     onOpenChange,
-    children,
+    // children, // Removed
 }) => {
     const {
         /* eslint-disable pionxzh/consistent-list-newline */
@@ -55,12 +56,10 @@ export const SettingDialog: FC<SettingDialogProps> = ({
             open={open}
             onOpenChange={onOpenChange}
         >
-            <Dialog.Trigger asChild>
-                {children}
-            </Dialog.Trigger>
+            {/* Trigger is now handled externally */}
             <Dialog.Portal>
                 <Dialog.Overlay className="DialogOverlay" />
-                <Dialog.Content className="DialogContent">
+                <Dialog.Content className="DialogContent DialogContentWide">
                     <Dialog.Title className="DialogTitle">{t('Exporter Settings')}</Dialog.Title>
 
                     <dl className="space-y-6">
