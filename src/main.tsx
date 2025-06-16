@@ -3,12 +3,20 @@ import sentinel from 'sentinel-js'
 import { fetchConversation, processConversation } from './api'
 import { getChatIdFromUrl, isSharePage } from './page'
 import { Menu } from './ui/Menu'
+import ScrollButtons from './ui/ScrollButtons'
 import { onloadSafe } from './utils/utils'
 
 import './i18n'
 import './styles/missing-tailwind.css'
 
 main()
+
+function getScrollButtonsContainer() {
+    const container = document.createElement('div')
+    // Style the container if needed, though ScrollButtons itself is fixed positioned
+    render(<ScrollButtons />, container)
+    return container
+}
 
 function main() {
     onloadSafe(() => {
@@ -17,6 +25,9 @@ function main() {
         document.head.append(styleEl)
 
         const injectionMap = new Map<HTMLElement, HTMLElement>()
+
+        // Render ScrollButtons
+        document.body.appendChild(getScrollButtonsContainer())
 
         const injectNavMenu = (nav: HTMLElement) => {
             if (injectionMap.has(nav)) return

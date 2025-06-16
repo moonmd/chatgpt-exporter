@@ -10,8 +10,8 @@ import { exportToText } from '../exporter/text'
 import { useWindowResize } from '../hooks/useWindowResize'
 import { getHistoryDisabled } from '../page'
 import { Divider } from './Divider'
-import { ExportDialog } from './ExportDialog'
-import { FileCode, IconArrowRightFromBracket, IconCamera, IconCopy, IconJSON, IconMarkdown, IconSetting, IconZip } from './Icons'
+// import { ExportDialog } from './ExportDialog' // Removed
+import { FileCode, IconArrowRightFromBracket, IconCamera, IconCopy, IconJSON, IconMarkdown, IconSetting } from './Icons' // IconZip removed
 import { MenuItem } from './MenuItem'
 import { SettingProvider, useSettingContext } from './SettingContext'
 import { SettingDialog } from './SettingDialog'
@@ -25,7 +25,7 @@ function MenuInner({ container }: { container: HTMLDivElement }) {
 
     const [open, setOpen] = useState(false)
     const [jsonOpen, setJsonOpen] = useState(false)
-    const [exportOpen, setExportOpen] = useState(false)
+    // const [exportOpen, setExportOpen] = useState(false) // Removed
     const [settingOpen, setSettingOpen] = useState(false)
 
     const {
@@ -102,7 +102,7 @@ function MenuInner({ container }: { container: HTMLDivElement }) {
                 </HoverCard.Trigger>
                 <Portal
                     container={isMobile ? container : document.body}
-                    forceMount={open || jsonOpen || settingOpen || exportOpen}
+                    forceMount={open || jsonOpen || settingOpen}
                 >
                     <HoverCard.Content
                         className={`
@@ -195,18 +195,6 @@ function MenuInner({ container }: { container: HTMLDivElement }) {
                                 </Dialog.Content>
                             </Dialog.Portal>
                         </Dialog.Root>
-                        <ExportDialog
-                            format={format}
-                            open={exportOpen}
-                            onOpenChange={setExportOpen}
-                        >
-                            <div className="row-full">
-                                <MenuItem
-                                    text={t('Export All')}
-                                    icon={IconZip}
-                                />
-                            </div>
-                        </ExportDialog>
 
                         {!isMobile && (
                             <HoverCard.Arrow
