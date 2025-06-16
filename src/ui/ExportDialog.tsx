@@ -1,7 +1,15 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import { useTranslation } from 'react-i18next'
-import { archiveConversation, deleteConversation, fetchAllConversations, fetchConversation, fetchProjects } from '../api'
+import {
+    type ApiConversationItem,
+    type ApiConversationWithId,
+    archiveConversation,
+    deleteConversation,
+    fetchAllConversations,
+    fetchConversation,
+    fetchProjects,
+} from '../api'
 import { exportAllToHtml } from '../exporter/html'
 import { exportAllToJson, exportAllToOfficialJson } from '../exporter/json'
 import { exportAllToMarkdown } from '../exporter/markdown'
@@ -9,14 +17,13 @@ import { RequestQueue } from '../utils/queue'
 import { CheckBox } from './CheckBox'
 import { IconCross, IconUpload } from './Icons'
 import { useSettingContext } from './SettingContext'
-import type { ApiConversationItem, ApiConversationWithId, ApiProjectInfo } from '../api'
 import type { FC } from '../type'
 import type { ChangeEvent } from 'preact/compat'
 
 interface ProjectSelectProps {
-    projects: ApiProjectInfo[]
-    selected: ApiProjectInfo | null
-    setSelected: (selected: ApiProjectInfo | null) => void
+    projects: any[]
+    selected: any | null
+    setSelected: (selected: any | null) => void
     disabled: boolean
 }
 
@@ -123,12 +130,11 @@ const DialogContent: FC<DialogContentProps> = ({ format }) => {
     const [apiConversations, setApiConversations] = useState<ApiConversationItem[]>([])
     const [localConversations, setLocalConversations] = useState<ApiConversationWithId[]>([])
     const conversations = exportSource === 'API' ? apiConversations : localConversations
-    const [projects, setProjects] = useState<ApiProjectInfo[]>([])
+    const [projects, setProjects] = useState<any[]>([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const [processing, setProcessing] = useState(false)
-    const [selectedProject, setSelectedProject] = useState<ApiProjectInfo | null>(null)
-
+    const [selectedProject, setSelectedProject] = useState<any | null>(null)
     const [selected, setSelected] = useState<ApiConversationItem[]>([])
     const [exportType, setExportType] = useState(exportAllOptions[0].label)
     const disabled = loading || processing || !!error || selected.length === 0
@@ -283,12 +289,12 @@ const DialogContent: FC<DialogContentProps> = ({ format }) => {
     useEffect(() => {
         fetchProjects()
             .then(setProjects)
-            .catch(err => setError(err.toString()))
+            .catch((err: any) => setError(err.toString()))
     }, [])
 
     useEffect(() => {
         setLoading(true)
-        fetchAllConversations(selectedProject?.id)
+        fetchAllConversations()
             .then(setApiConversations)
             .catch(err => setError(err.toString()))
             .finally(() => setLoading(false))
@@ -367,20 +373,24 @@ interface ExportDialogProps {
     format: string
     open: boolean
     onOpenChange: (value: boolean) => void
+    // children?: preact.ComponentChildren // No longer needed if trigger is external
 }
 
-export const ExportDialog: FC<ExportDialogProps> = ({ format, open, onOpenChange, children }) => {
+export const ExportDialog: FC<ExportDialogProps> = ({ format, open, onOpenChange }) => {
     return (
         <Dialog.Root
             open={open}
             onOpenChange={onOpenChange}
         >
-            <Dialog.Trigger asChild>
+            {/* Trigger is now handled externally by the caller */}
+            {/* <Dialog.Trigger asChild>
                 {children}
-            </Dialog.Trigger>
+            </Dialog.Trigger> */}
             <Dialog.Portal>
                 <Dialog.Overlay className="DialogOverlay" />
                 <Dialog.Content className="DialogContent">
+                    {/* {open && <DialogContent format={format} />}
+                    {open && <h1>EXPORT DIALOG TEST</h1>} */}
                     {open && <DialogContent format={format} />}
                 </Dialog.Content>
             </Dialog.Portal>

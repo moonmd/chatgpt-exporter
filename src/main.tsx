@@ -1,8 +1,12 @@
 import { render } from 'preact'
 import sentinel from 'sentinel-js'
 import { fetchConversation, processConversation } from './api'
-import { getChatIdFromUrl, isSharePage } from './page'
+import { getChatIdFromUrl } from './page'
+
 import { Menu } from './ui/Menu'
+
+// ScrollButtons import removed
+// import ScrollButtons from './ui/ScrollButtons' // Removed
 import { onloadSafe } from './utils/utils'
 
 import './i18n'
@@ -16,47 +20,17 @@ function main() {
         styleEl.id = 'sentinel-css'
         document.head.append(styleEl)
 
-        const injectionMap = new Map<HTMLElement, HTMLElement>()
+        // Render the Menu component (which is now the floating button cluster)
+        document.body.appendChild(getMenuContainer())
 
-        const injectNavMenu = (nav: HTMLElement) => {
-            if (injectionMap.has(nav)) return
+        // Remove old sidebar injection logic
+        // const injectionMap = new Map<HTMLElement, HTMLElement>()
+        // const injectNavMenu = (nav: HTMLElement) => { ... }
+        // sentinel.on('nav', injectNavMenu)
+        // setInterval(() => { ... }, 300)
 
-            const container = getMenuContainer()
-            injectionMap.set(nav, container)
-
-            const chatList = nav.querySelector(':scope > div.sticky.bottom-0')
-            if (chatList) {
-                chatList.prepend(container)
-            }
-            else {
-                // fallback to the bottom of the nav
-                container.style.backgroundColor = '#171717'
-                container.style.position = 'sticky'
-                container.style.bottom = '72px'
-                nav.append(container)
-            }
-        }
-
-        sentinel.on('nav', injectNavMenu)
-
-        setInterval(() => {
-            injectionMap.forEach((container, nav) => {
-                if (!nav.isConnected) {
-                    container.remove()
-                    injectionMap.delete(nav)
-                }
-            })
-
-            const navList = Array.from(document.querySelectorAll('nav')).filter(nav => !injectionMap.has(nav))
-            navList.forEach(injectNavMenu)
-        }, 300)
-
-        // Support for share page
-        if (isSharePage()) {
-            sentinel.on(`div[role="presentation"] > .w-full > div >.flex.w-full`, (target) => {
-                target.prepend(getMenuContainer())
-            })
-        }
+        // Remove share page specific injection logic for Menu
+        // if (isSharePage()) { ... }
 
         /** Insert timestamp to the bottom right of each message */
         let chatId = ''
@@ -98,7 +72,7 @@ function main() {
 function getMenuContainer() {
     const container = document.createElement('div')
     // to overlap on the list section
-    container.style.zIndex = '99'
-    render(<Menu container={container} />, container)
+    // container.style.zIndex = '99' // No longer needed here, Menu component handles its own zIndex
+    render(<Menu />, container) // Menu component no longer takes container prop
     return container
 }
