@@ -249,8 +249,7 @@ function MenuInner() {
                         style={{ width: 268 }}
                         sideOffset={10}
                         align="start"
-                        // side='right' // This will be changed in next step
-                        side='left' // Tentatively set to left, assuming trigger is now on the right
+                        side='right' // Reverted: Menu opens to the right of the trigger
                     >
                         <div className="row-full"><MenuItem text={t('Setting')} icon={IconSetting} onClick={() => setSettingOpen(true)} /></div>
                         <MenuItem text={t('Copy Text')} successText={t('Copied!')} icon={IconCopy} className="row-full" onClick={onClickText} />
@@ -272,11 +271,18 @@ function MenuInner() {
                                 </Dialog.Content>
                             </Dialog.Portal>
                         </Dialog.Root>
-                        <div className="row-full"><MenuItem text={t('Export All')} icon={IconZip} onClick={() => setExportOpen(true)} /></div>
+                        <div className="row-full"><MenuItem text={t('Export All')} icon={IconZip} onClick={() => {
+                            console.log('[Menu.tsx] Export All MenuItem clicked, setting exportOpen to true');
+                            setExportOpen(true);
+                        }} /></div>
                         <HoverCard.Arrow width="16" height="8" style={{ fill: 'var(--ce-menu-primary)', stroke: 'var(--ce-border-light)', strokeWidth: '1px' }} />
                     </HoverCard.Content>
                 </HoverCard.Portal>
             </HoverCard.Root>
+            {/* Log the value of exportOpen before rendering ExportDialog */}
+            {console.log('[Menu.tsx] Rendering ExportDialog, exportOpen state is:', exportOpen)}
+            <SettingDialog open={settingOpen} onOpenChange={setSettingOpen} />
+            <ExportDialog format={format} open={exportOpen} onOpenChange={setExportOpen} />
         </div>
     );
 }
