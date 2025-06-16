@@ -1,8 +1,11 @@
 import { render } from 'preact'
 import sentinel from 'sentinel-js'
 import { fetchConversation, processConversation } from './api'
-import { getChatIdFromUrl, isSharePage } from './page'
-import { Menu } from './ui/Menu' // ScrollButtons import removed
+import { getChatIdFromUrl } from './page'
+
+import { Menu } from './ui/Menu'
+
+// ScrollButtons import removed
 // import ScrollButtons from './ui/ScrollButtons' // Removed
 import { onloadSafe } from './utils/utils'
 
