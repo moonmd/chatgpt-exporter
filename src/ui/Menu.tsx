@@ -322,8 +322,7 @@ function MenuInner() {
             ref={floatingContainerRef}
             style={{
                 position: 'fixed',
-                top: '50%',
-                transform: 'translateY(-50%)',
+                top: '20%',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '4px', // For ':-' layout, adjust as needed
